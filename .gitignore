@@ -1,2 +1,4 @@
 /.venv/
 /.idea/*
+/hw3/t5_model.pkl
+/hw3/t5_tokenizer.pkl
