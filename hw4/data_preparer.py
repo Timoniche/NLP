@@ -1,13 +1,45 @@
 import pickle
+from random import shuffle
 
 from datasets import load_dataset
+from sentence_transformers import InputExample
 
 
-def load_question_context_similarity():
-    train, _, _ = _load_sberquad_dataset()
+def trainval_shuffled_data(from_file=True):
+    datafile = 'trainval.pkl'
 
-    questions = train['question'].tolist()
-    contexts = train['context'].tolist()
+    if from_file:
+        with open(datafile, 'rb') as f:
+            data = pickle.load(f)
+        return data
+
+    good, bad = load_trainval_samples()
+    data = good + bad
+    shuffle(data)
+
+    with open(datafile, 'wb') as f:
+        pickle.dump(data, f)
+
+    return data
+
+
+def trainval_examples():
+    data = trainval_shuffled_data(from_file=True)
+
+    trainval = []
+    for question, document, cos in data:
+        trainval.append(
+            InputExample(texts=[question, document], label=cos)
+        )
+
+    return trainval
+
+
+def load_trainval_samples():
+    train, val, _ = _load_sberquad_dataset()
+
+    questions = train['question'].tolist() + val['question'].tolist()
+    contexts = train['context'].tolist() + val['context'].tolist()
 
     good_q_c_cos = list(zip(questions, contexts, [1.0] * len(questions)))
 
@@ -20,8 +52,7 @@ def load_question_context_similarity():
         if next_c != cur_c:
             bad_q_c_cos.append((cur_q, next_c, 0.0))
 
-    print('good train samples: ', len(good_q_c_cos))
-    print('bad train samples: ', len(bad_q_c_cos))
+    return good_q_c_cos, bad_q_c_cos
 
 
 def _load_raw_sberquad_dataset(from_file=True):
@@ -47,7 +78,7 @@ def _load_sberquad_dataset():
 
 
 def main():
-    load_question_context_similarity()
+    trainval_examples()
 
 
 if __name__ == '__main__':
