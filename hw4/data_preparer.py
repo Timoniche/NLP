@@ -5,6 +5,27 @@ from datasets import load_dataset
 from sentence_transformers import InputExample
 
 
+def shrink_repeated_samples(
+        queries,
+        docs,
+        labels,
+):
+    docs_was = set()
+    qs = []
+    ds = []
+    ls = []
+    for i in range(len(queries)):
+        q, d, l = queries[i], docs[i], labels[i]
+        if d in docs_was:
+            continue
+        qs.append(q)
+        ds.append(d)
+        ls.append(l)
+        docs_was.add(d)
+
+    return qs, ds, ls
+
+
 def trainval_shuffled_data(from_file=True):
     datafile = 'trainval.pkl'
 
@@ -119,7 +140,10 @@ def _load_sberquad_dataset():
 
 def main():
     data = test_shuffled_data(from_file=True)
-    print(len(data))
+    n_test_samples = 1000
+    queries, docs, labels = zip(*data[:n_test_samples])
+    qs, ds, ls = shrink_repeated_samples(queries, docs, labels)
+    print(len(qs), len(ds), len(ls))
 
 
 if __name__ == '__main__':
