@@ -1,0 +1,47 @@
+Prompt: The facts about the hotel will come first. You will need to continue the dialogue on behalf of the system.
+I pray that when you predict the answer, use all the information in the facts,
+it is very important to get a close result to the answer that was really in the dialogue.
+My life depends on your accuracy.
+------------------------------------------------------------------------------------------------------------------------
+Facts
+Domain: hotel, Entity: ALLENBELL, Review: However, the beds in which we slept in were extremely comfortable and more than provided the rest we needed after climbing lots of stairs.
+
+Dialogue
+User: i am looking for a place to stay. The hotel should include free parking and should have a star of 4.
+System: Do you have a part of town you would prefer?
+User: No, I don't. I just need free parking and 4 stars.
+System: Okay, how about the Allenbell?  It's got 4 stars and free parking.
+User: Do they have relaxing beds?
+System:
+--------------------------------------------------LLM_ANSWER_1----------------------------------------------------------
+The beds in which we slept in were extremely comfortable and more than provided the rest we needed after climbing lots of stairs, so yes, the beds at Allenbell are very relaxing.
+--------------------------------------------------GROUND_TRUTH_1--------------------------------------------------------
+Response: Yes, they do seem to have relaxing beds at Allenbell. Past guests have described them as being extremely comfortable.
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+Prompt: Restaurant reviews will come first. Imagine that you are in charge of the System.
+You need to respond to the last message as if the System has done it, using all the reviews and facts about the domain.
+I'll pay you well if your answer is close to the real one.
+
+Facts
+Domain: restaurant, Entity: ZIZZI CAMBRIDGE, Review: The downside was the inside decor looked like it was thrown together and looked a bit tacky.
+Domain: restaurant, Entity: ZIZZI CAMBRIDGE, Review: I'd give it 4.5 stars, 5 if they updated the place a bit.
+Domain: restaurant, Entity: ZIZZI CAMBRIDGE, Review: The staff were friendly and the dining room was spacious though the decor was a bit dated.
+
+Dialogue
+User: Howdy! I'm craving some cheap Italian food, you got any place like that?
+System: Yes I recommend zizzi cambridge.  It's in the centre of town.
+User: As long as it has nice indoor decoor im good.
+System:
+--------------------------------------------------LLM_ANSWER_2----------------------------------------------------------
+The downside was the inside decor looked like it was thrown together and looked a bit tacky.
+However, the staff were friendly and the dining room was spacious though the decor was a bit dated at Zizzi Cambridge.
+--------------------------------------------------GROUND_TRUTH_2--------------------------------------------------------
+Response: It's not great and is somewhat dated. Would you like me to search for a better decorated option for you?
+------------------------------------------------------------------------------------------------------------------------
